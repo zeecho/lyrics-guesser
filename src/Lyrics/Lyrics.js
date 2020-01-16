@@ -65,13 +65,17 @@ export default class Lyrics extends Component {
       let indices = this.getAllIndices(this.state.loweredWords, input);
 
       if (indices.length) {
-        this.state.guessedWords.push(input);
+        let displayedWords = this.state.displayedWords;
+        let foundWords = this.state.foundWords;
         indices.forEach(indice => {
-          this.state.displayedWords[indice] = this.state.answerWords[indice];
-          this.state.foundWords++;
+          displayedWords[indice] = this.state.answerWords[indice];
+          foundWords++;
         })
         this.setState({
-          userInput: ''
+          userInput: '',
+          displayedWords: displayedWords,
+          guessedWords: [...this.state.guessedWords, input],
+          foundWords: foundWords
         })
       }
 
