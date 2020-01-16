@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Words from './Words';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 export default class Lyrics extends Component {
   constructor(props) {
     super(props);
-    const answers = props.lyrics.replace(/\s\s+/g, ' ').replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").split(" ");
+    const answers = props.lyrics.replace(/[.,\/#!$%\^&\*;:{}=_`~()]/g,"").replace(/\s\s+/g, ' ').split(" ");
     this.state = {
       userInput: '',
       answerWords: answers,
@@ -37,18 +36,13 @@ export default class Lyrics extends Component {
       this.state.displayedWords.push('?');
     }
     answers.forEach(word => {
-      this.state.loweredWords.push(word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+      // this.state.loweredWords.push(word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
+      this.state.loweredWords.push(this.sanitizeWord(word));
     })
   }
 
-  renderWords() {
-    return this.state.displayedWords.map((word, id) => {
-      return(
-        <Paper variant="outlined" key={id} style={{ width: '30%', paddingTop: '2px', paddingBottom: '2px', align: 'center', textAlign: 'center' }}>{word} </Paper>
-      )
-    }
-
-    )
+  sanitizeWord(word) {
+      return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['\-\"«»]/g,"");
   }
 
   getAllIndices(array, element) {
@@ -63,7 +57,7 @@ export default class Lyrics extends Component {
   }
 
   checkWord(event) {
-    let input = this.state.userInput.trim().toLowerCase();
+    let input = this.sanitizeWord(this.state.userInput.trim());
     if (!input) {
       return;
     }
@@ -125,7 +119,7 @@ export default class Lyrics extends Component {
         alignItems="center"
         >
           <Grid container justify="center" spacing={1} style={{ marginTop: '5%' }}>
-            {this.renderWords()}
+            <Words displayedWords={this.state.displayedWords} />
           </Grid>
         </Grid>
         <Grid
