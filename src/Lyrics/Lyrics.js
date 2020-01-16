@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 export default class Lyrics extends Component {
   constructor(props) {
     super(props);
-    const answers = props.lyrics.replace(/[.,\/#!$%\^&\*;:{}=_`~()]/g,"").replace(/\s\s+/g, ' ').split(" ");
+    const answers = props.lyrics.replace(/[.,/#!$%^&*;:{}=_`~()]/g,"").replace(/\s\s+/g, ' ').split(" ");
     this.state = {
       userInput: '',
       answerWords: answers,
@@ -42,13 +42,13 @@ export default class Lyrics extends Component {
   }
 
   sanitizeWord(word) {
-      return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['\-\"«»]/g,"");
+      return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['\-"«»]/g,"");
   }
 
   getAllIndices(array, element) {
     let indices = [];
     var idx = array.indexOf(element);
-    while (idx != -1) {
+    while (idx !== -1) {
       indices.push(idx);
       idx = array.indexOf(element, idx + 1);
     }
