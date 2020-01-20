@@ -7,18 +7,19 @@ import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Words from './Words';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: 200,
-    },
-  },
-}));
-
-
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     '& > *': {
+//       margin: theme.spacing(1),
+//       width: 200,
+//     },
+//   },
+// }));
+//
+// const classes = useStyles();
 export default class Lyrics extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +31,11 @@ export default class Lyrics extends Component {
       guessedWords: [],
       displayedWords: [],
       totalWords: answers.length,
-      foundWords: 0
+      foundWords: 0,
+      defaultValue: '...',
     }
     for (var i = 0; i < answers.length; i++) {
-      this.state.displayedWords.push('?');
+      this.state.displayedWords.push(this.state.defaultValue);
     }
     answers.forEach(word => {
       // this.state.loweredWords.push(word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
@@ -88,8 +90,22 @@ export default class Lyrics extends Component {
     });
   }
 
+  giveUp(event) {
+    event.preventDefault();
+    // TODO disable input
+
+    this.setState({
+      displayedWords: this.state.answerWords
+    })
+    const wordInput = document.getElementById('word-input-form');
+    wordInput.parentNode.removeChild(wordInput);
+    const giveUpButton = document.getElementById('give-up-button');
+    giveUpButton.parentNode.removeChild(giveUpButton);
+  }
+
   render() {
     return(
+      // <Container maxWidth="sm" className={classes.root}>
       <Container maxWidth="sm">
         <AppBar position="static">
           <Toolbar>
@@ -104,16 +120,17 @@ export default class Lyrics extends Component {
               {this.state.foundWords}/{this.state.totalWords}
             </Typography>
             <Box style={{ paddingLeft: '20%' }}>
-            <form noValidate autoComplete="off">
-              <TextField
-                id="standard-basic"
-                label="Words"
-                value={this.state.userInput}
-                onKeyUp={(this.checkWord.bind(this))}
-                onChange={(this.onChange.bind(this))}
-              />
-            </form>
+              <form noValidate autoComplete="off" id="word-input-form">
+                <TextField
+                  id="word-input"
+                  label="Words"
+                  value={this.state.userInput}
+                  onKeyUp={(this.checkWord.bind(this))}
+                  onChange={(this.onChange.bind(this))}
+                />
+              </form>
             </Box>
+            <Button id="give-up-button" variant="contained" onClick={this.giveUp.bind(this)}>Give up</Button>
           </Toolbar>
         </AppBar>
         <Grid
