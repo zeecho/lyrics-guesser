@@ -1,7 +1,0 @@
-{
-  "env": {
-    "MONGO_USER": "ap",
-    "MONGO_PASSWORD": "jsXQ9wGzyCW7kYaS",
-    "MONGO_DB": "lyrics-guesser-dev"
-  }
-}
