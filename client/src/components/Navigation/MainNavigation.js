@@ -1,22 +1,24 @@
 import React from 'react';
 // import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { Home } from '@material-ui/icons';
 import { NavLink } from 'react-router-dom';
 
 import './MainNavigation.css';
 
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
 const mainNavigation = props => (
-  <header className="main-navigation">
-    <div className="main-navigation__logo">
-      <h1>Lyrics Guesser</h1>
-    </div>
-    <nav className="main-navigation__items">
-      <ul>
-        <li><NavLink to="/home">Home <Home /></NavLink></li>
-        <li><NavLink to="/add-lyrics">Add Lyrics</NavLink></li>
-      </ul>
-    </nav>
-  </header>
+      <Container maxWidth="sm">
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h3">
+              <NavLink to="/home" className="navlink-home">Lyrics Guesser</NavLink>
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </Container>
 )
 
 export default mainNavigation;

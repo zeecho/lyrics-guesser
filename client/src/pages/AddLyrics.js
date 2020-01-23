@@ -1,19 +1,47 @@
 import React, { Component } from 'react';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class AddLyricsPage extends Component {
   constructor(props) {
     super(props);
-    this.titleEl = React.createRef();
-    this.artistEl = React.createRef();
-    this.textEl = React.createRef();
+    // this.titleEl = React.createRef();
+    // this.artistEl = React.createRef();
+    // this.textEl = React.createRef();
+    this.titleInputValue = '';
+    this.artistInputValue = '';
+    this.textInputValue = '';
   }
 
+  handleTitleInput = event => {
+    this.setState({
+      titleInputValue: event.target.value
+    })
+  }
+
+  handleArtistInput = event => {
+    this.setState({
+      artistInputValue: event.target.value
+    })
+  }
+
+  handleTextInput = event => {
+    this.setState({
+      textInputValue: event.target.value
+    })
+  }
   submitHandler = event => {
     event.preventDefault();
-    const title = this.titleEl.current.value;
-    const artist = this.artistEl.current.value;
-    const text = this.textEl.current.value;
-
+    // const title = this.titleEl.current.value;
+    // const title = this.refs.titlEl.getValue();
+    const title = this.state.titleInputValue;
+    const artist = this.state.artistInputValue;
+    const text = this.state.textInputValue;
+    // const artist = this.artistEl.current.value;
+    // const text = this.textEl.current.value;
+    //
     const requestBody = {
       query: `
         mutation {
@@ -56,26 +84,23 @@ class AddLyricsPage extends Component {
 
   render() {
     return(
-      <div>
-        <h1>Add Lyrics</h1>
-        <form onSubmit={this.submitHandler}>
+      <Grid>
+        <Typography variant="h4">Add Lyrics</Typography>
+        <form onSubmit={this.submitHandler} noValidate autoComplete="off">
           <div>
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title" ref={this.titleEl} />
+            <TextField id="title" label="Title" onChange={this.handleTitleInput} />
           </div>
           <div>
-            <label htmlFor="artist">Artist</label>
-            <input type="text" id="artist" ref={this.artistEl} />
+            <TextField id="artist" label="Artist" onChange={this.handleArtistInput} />
           </div>
           <div>
-            <label htmlFor="text">Text</label>
-            <input type="text" id="text" ref={this.textEl} />
+            <TextField id="text" label="Text" onChange={this.handleTextInput} />
           </div>
           <div>
-            <button type="submit">Submit</button>
+            <Button variant="outlined"  type="submit">Submit</Button>
           </div>
         </form>
-      </div>
+      </Grid>
     );
   }
 }

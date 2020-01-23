@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import GuessPage from './Guess';
 
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 class HomePage extends Component {
   constructor(props) {
@@ -59,23 +67,39 @@ class HomePage extends Component {
   render() {
     const songList = this.state.availableSongs.map(song => {
       return (
-        <li key={song._id}>
+        <ListItem key={song.id}>
           <NavLink to={{
             pathname: "/guess",
             props: {
               song
             }
-          }}>{song.artist} - {song.title}</NavLink>
-        </li>
+          }}>
+            <ListItemText
+              primary={song.title}
+              secondary={song.artist}
+            />
+          </NavLink>
+        </ListItem>
       )
     })
     return(
-      <div>
-        <h1>Home</h1>
-        <ul>
-          {songList}
-        </ul>
-      </div>
+      <Grid container>
+        <Grid item xs={10} md={10}>
+          <Typography variant="h6">
+            Songs list
+          </Typography>
+            <List>
+              {songList}
+            </List>
+        </Grid>
+        <Grid item xs={2} md={2}>
+            <NavLink to="/add-lyrics">
+              <Fab color="primary" aria-label="add">
+                <AddIcon />
+              </Fab>
+            </NavLink>
+        </Grid>
+      </Grid>
     );
   }
 }

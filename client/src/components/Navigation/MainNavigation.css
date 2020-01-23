@@ -1,4 +1,15 @@
-.main-navigation {
+.navlink-home {
+  text-decoration: none;
+  color: white;
+}
+
+.main-navigation__items a:hover,
+.main-navigation__items a:active,
+.main-navigation__items a.active
+ {
+  color: white;
+}
+/* .main-navigation {
   position: fixed;
   left: 0;
   top: 0;
@@ -40,4 +51,4 @@
 .main-navigation__items a.active
  {
   color: white;
-}
+} */

@@ -59,7 +59,8 @@ export default class Lyrics extends Component {
   }
 
   checkWord(event) {
-    let input = this.sanitizeWord(this.state.userInput.trim());
+    let input = this.state.userInput;
+    input = this.sanitizeWord(input.trim());
     if (!input) {
       return;
     }
@@ -106,11 +107,11 @@ export default class Lyrics extends Component {
   render() {
     return(
       // <Container maxWidth="sm" className={classes.root}>
-      <Container maxWidth="sm">
+      <Container>
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6">
-              Lyrics of {this.props.title} ({this.props.artist})
+              {this.props.title} ({this.props.artist})
             </Typography>
           </Toolbar>
         </AppBar>
