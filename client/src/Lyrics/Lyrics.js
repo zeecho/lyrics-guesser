@@ -80,6 +80,10 @@ export default class Lyrics extends Component {
           guessedWords: [...this.state.guessedWords, input],
           foundWords: foundWords
         })
+        let totalWords = this.state.totalWords;
+        if (totalWords == foundWords) {
+          this.removeInputAndGiveUpButton();
+        }
       }
 
     }
@@ -91,17 +95,20 @@ export default class Lyrics extends Component {
     });
   }
 
-  giveUp(event) {
-    event.preventDefault();
-    // TODO disable input
-
-    this.setState({
-      displayedWords: this.state.answerWords
-    })
+  removeInputAndGiveUpButton() {
     const wordInput = document.getElementById('word-input-form');
     wordInput.parentNode.removeChild(wordInput);
     const giveUpButton = document.getElementById('give-up-button');
     giveUpButton.parentNode.removeChild(giveUpButton);
+  }
+
+  giveUp(event) {
+    event.preventDefault();
+    this.removeInputAndGiveUpButton();
+
+    this.setState({
+      displayedWords: this.state.answerWords
+    })
   }
 
   render() {
