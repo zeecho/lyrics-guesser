@@ -135,6 +135,7 @@ export default class Lyrics extends Component {
                   value={this.state.userInput}
                   onKeyUp={(this.checkWord.bind(this))}
                   onChange={(this.onChange.bind(this))}
+                  onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                 />
               </form>
             </Box>
