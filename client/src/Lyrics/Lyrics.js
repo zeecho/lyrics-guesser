@@ -9,6 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Words from './Words';
+import {sanitizeWord} from './utils';
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -23,6 +24,7 @@ import Words from './Words';
 export default class Lyrics extends Component {
   constructor(props) {
     super(props);
+    this.sanitizeWord = sanitizeWord.bind(this);
     const answers = props.lyrics.replace(/[.,/#!$%^&*;:{}=_`~()]/g,"").replace(/\s\s+/g, ' ').split(" ");
     this.state = {
       userInput: '',
@@ -41,10 +43,6 @@ export default class Lyrics extends Component {
       // this.state.loweredWords.push(word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''));
       this.state.loweredWords.push(this.sanitizeWord(word));
     })
-  }
-
-  sanitizeWord(word) {
-      return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['\-"«»]/g,"");
   }
 
   getAllIndices(array, element) {
@@ -149,7 +147,7 @@ export default class Lyrics extends Component {
         alignItems="center"
         >
           <Grid container justify="center" spacing={1} style={{ marginTop: '5%' }}>
-            <Words displayedWords={this.state.displayedWords} />
+            <Words displayedWords={this.state.displayedWords} guessedWords={this.state.guessedWords} />
           </Grid>
         </Grid>
         <Grid
